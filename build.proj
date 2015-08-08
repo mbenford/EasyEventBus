@@ -1,0 +1,51 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Make">
+
+  <PropertyGroup>
+    <SourceDir>$(MSBuildProjectDirectory)</SourceDir>
+    <OutputDir>$(SourceDir)\Output</OutputDir>
+    <BuildProperties>Configuration=Release;Platform=Any CPU</BuildProperties>
+    <NugetPath>$(MSBuildProjectDirectory)\.nuget\nuget.exe</NugetPath>
+  </PropertyGroup>
+
+  <UsingTask
+    AssemblyFile="$(SourceDir)\.build\xunit.runner.msbuild.dll"
+    TaskName="Xunit.Runner.MSBuild.xunit" />
+
+  <ItemGroup>
+    <SolutionFile
+      Include="$(SourceDir)\EasyEventBus.sln" />
+  </ItemGroup>
+
+  <Target Name="Clean">
+    <MSBuild
+      Projects="@(SolutionFile)"
+      Targets="Clean"
+      Properties="$(BuildProperties)" />
+    <RemoveDir
+      Directories="$(OutputDir)"
+      ContinueOnError="True" />
+  </Target>
+
+  <Target Name="Build">
+    <MSBuild
+      Projects="@(SolutionFile)"
+      Properties="$(BuildProperties)" />
+  </Target>
+
+  <Target Name="Test" DependsOnTargets="Build" Condition="'$(APPVEYOR)' == ''">
+    <xunit 
+      Assemblies="$(SourceDir)\Core.Tests\bin\Release\Core.Tests.dll" />
+  </Target>
+  
+  <Target Name="Pack" DependsOnTargets="Test" Condition="'$(APPVEYOR)' == ''">
+    <MakeDir
+      Directories="$(OutputDir)" />
+    <Exec
+      Command="$(NugetPath) pack $(SourceDir)\Core\Core.csproj -Build -OutputDirectory $(OutputDir)" />
+  </Target>
+
+  <Target Name="Make">
+    <CallTarget
+      Targets="Clean;Build;Test;Pack" />
+  </Target>
+</Project>
