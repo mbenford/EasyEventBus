@@ -70,7 +70,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EasyEventBus\Core.csproj">
+    <ProjectReference Include="..\Core\Core.csproj">
       <Project>{214FBE45-D1C3-46FF-8364-9626E605A4DF}</Project>
       <Name>Core</Name>
     </ProjectReference>
