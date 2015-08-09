@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="AssemblyHandlerContainerTest.cs" />
     <Compile Include="EventBusTest.cs" />
+    <Compile Include="InMemoryPublicationStrategyTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

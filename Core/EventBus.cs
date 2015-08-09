@@ -1,18 +1,40 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EasyEventBus
 {
     /// <summary>
     /// Represents an event bus.
     /// </summary>
-    public abstract class EventBus
+    public sealed class EventBus
     {
+        private readonly IEnumerable<IPublicationStrategy> publicationStrategies;
+
+        public EventBus(IPublicationStrategy publicationStrategy)
+            : this(new[] { publicationStrategy })
+        {
+        }
+
+        public EventBus(IEnumerable<IPublicationStrategy> publicationStrategies)
+        {
+            if (publicationStrategies == null)
+                throw new ArgumentNullException("publicationStrategies");
+            this.publicationStrategies = publicationStrategies;
+        }
+
         /// <summary>
         /// Publishes an event to registered handlers of the provided type.
         /// </summary>
         /// <typeparam name="T">Type of the event.</typeparam>
         /// <param name="eventData">Data of the event.</param>
-        public abstract void Publish<T>(T eventData);
+        public void Publish<T>(T eventData)
+        {
+            foreach (var strategy in publicationStrategies)
+            {
+                strategy.Publish(eventData);
+            }
+        }
 
         /// <summary>
         /// Publishes an event to registered handlers of the provided type asynchronously.

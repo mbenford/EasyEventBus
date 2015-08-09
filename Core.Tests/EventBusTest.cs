@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Moq;
 using Xunit;
 
@@ -8,50 +7,45 @@ namespace EasyEventBus.Tests
     public class EventBusTest
     {
         [Fact]
-        public void Publishes_An_Event_To_All_Handlers_Synchronously()
+        public void Uses_The_Provided_Strategies_To_Publish_An_Event_Synchronously()
         {
             // Arrange
-            var containerMock = new Mock<IEventHandlerContainer>();
-            var handlers = SetUpContainer<string>(containerMock, 3);
-
-            var sut = new InMemoryEventBus(containerMock.Object);
+            var publicationStrategyMock = new[]
+            {
+                new Mock<IPublicationStrategy>(),
+                new Mock<IPublicationStrategy>(),
+                new Mock<IPublicationStrategy>()
+            };
+            var sut = new EventBus(publicationStrategyMock.Select(m => m.Object));
 
             // Act
             sut.Publish("some data");
 
             // Assert
-            AssertHandlersHaveBeenCalled(handlers, "some data");
+            publicationStrategyMock[0].Verify(s => s.Publish("some data"));
+            publicationStrategyMock[1].Verify(s => s.Publish("some data"));
+            publicationStrategyMock[2].Verify(s => s.Publish("some data"));
         }
 
         [Fact]
-        public async void Publishes_An_Event_To_All_Handlers_Asynchronously()
+        public async void Uses_The_Provided_Strategies_To_Publish_An_Event_Asynchronously()
         {
             // Arrange
-            var containerMock = new Mock<IEventHandlerContainer>();
-            var handlers = SetUpContainer<int>(containerMock, 3);
-            var sut = new InMemoryEventBus(containerMock.Object);
+            var publicationStrategyMock = new[]
+            {
+                new Mock<IPublicationStrategy>(),
+                new Mock<IPublicationStrategy>(),
+                new Mock<IPublicationStrategy>()
+            };
+            var sut = new EventBus(publicationStrategyMock.Select(m => m.Object));
 
             // Act
-            await sut.PublishAsync(42);
+            await sut.PublishAsync("some data");
 
             // Assert
-            AssertHandlersHaveBeenCalled(handlers, 42);
-        }
-
-        private Mock<IEventHandler<T>>[] SetUpContainer<T>(Mock<IEventHandlerContainer> container, int count)
-        {
-            var handlers = new List<Mock<IEventHandler<T>>>();
-            for (int i = 0; i < count; i++) handlers.Add(new Mock<IEventHandler<T>>());
-            container.Setup(c => c.GetAll<T>()).Returns(handlers.Select(h => h.Object));
-            return handlers.ToArray();
-        }
-
-        private void AssertHandlersHaveBeenCalled<T>(Mock<IEventHandler<T>>[] handlers, T value)
-        {
-            foreach (var handler in handlers)
-            {
-                handler.Verify(h => h.Handle(value));
-            }
+            publicationStrategyMock[0].Verify(s => s.Publish("some data"));
+            publicationStrategyMock[1].Verify(s => s.Publish("some data"));
+            publicationStrategyMock[2].Verify(s => s.Publish("some data"));
         }
     }
 }

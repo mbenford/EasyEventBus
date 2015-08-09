@@ -1,22 +1,25 @@
-﻿namespace EasyEventBus
+﻿using System;
+
+namespace EasyEventBus
 {
     /// <summary>
     /// Represents an in-memory event bus.
     /// </summary>
-    public sealed class InMemoryEventBus : EventBus
+    public sealed class InMemoryPublicationStrategy : IPublicationStrategy
     {
         private readonly IEventHandlerContainer container;
 
         /// <summary>
-        /// Creates a new instance of the InMemoryEventBus class.
+        /// Creates a new instance of the InMemoryPublicationStrategy class.
         /// </summary>
         /// <param name="container">Instance of an event handler container.</param>
-        public InMemoryEventBus(IEventHandlerContainer container)
+        public InMemoryPublicationStrategy(IEventHandlerContainer container)
         {
+            if (container == null) throw new ArgumentNullException("container");
             this.container = container;
         }
 
-        public override void Publish<T>(T eventData)
+        public void Publish<T>(T eventData)
         {
             foreach (var handler in container.GetAll<T>())
             {

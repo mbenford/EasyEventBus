@@ -46,10 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyHandlerContainer.cs" />
-    <Compile Include="InMemoryEventBus.cs" />
+    <Compile Include="InMemoryPublicationStrategy.cs" />
     <Compile Include="EventBus.cs" />
     <Compile Include="IEventHandler.cs" />
     <Compile Include="IEventHandlerContainer.cs" />
+    <Compile Include="IPublicationStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
