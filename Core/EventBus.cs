@@ -71,8 +71,6 @@ namespace EasyEventBus
         /// <returns>A <see cref="System.Threading.Tasks.Task"/>.</returns>
         public async Task PublishAsync<T>(T eventData) where T : class
         {
-            Precondition.NotNull(eventData);
-
             await Task.Factory.StartNew(() => Publish(eventData));
         }
     }
