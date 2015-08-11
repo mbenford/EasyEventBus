@@ -11,8 +11,8 @@ namespace EasyEventBus.Tests
         [Theory]
         [InlineData("some data", 1)]
         [InlineData("some other data", 2)]
-        [InlineData(42, 3)]
-        public void Publishes_An_Event_To_All_Handlers<T>(T data, int count)
+        [InlineData("yet another data", 3)]
+        public void Publishes_An_Event_To_All_Handlers<T>(T data, int count) where T : class
         {
             // Arrange
             var containerMock = new Mock<IEventHandlerContainer>();
@@ -33,7 +33,7 @@ namespace EasyEventBus.Tests
             Assert.Throws<ArgumentNullException>("container", () => new InMemoryPublicationStrategy(null));
         }
 
-        private Mock<IEventHandler<T>>[] SetUpContainer<T>(Mock<IEventHandlerContainer> container, int count)
+        private Mock<IEventHandler<T>>[] SetUpContainer<T>(Mock<IEventHandlerContainer> container, int count) where T : class
         {
             var handlers = new List<Mock<IEventHandler<T>>>();
             for (int i = 0; i < count; i++) handlers.Add(new Mock<IEventHandler<T>>());
@@ -41,7 +41,7 @@ namespace EasyEventBus.Tests
             return handlers.ToArray();
         }
 
-        private void AssertHandlersHaveBeenCalled<T>(Mock<IEventHandler<T>>[] handlers, T value)
+        private void AssertHandlersHaveBeenCalled<T>(Mock<IEventHandler<T>>[] handlers, T value) where T : class
         {
             foreach (var handler in handlers)
             {

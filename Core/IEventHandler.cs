@@ -4,7 +4,7 @@
     /// Represents an event handler of the declared type.
     /// </summary>
     /// <typeparam name="T">Type of the event that the handler should process.</typeparam>
-    public interface IEventHandler<in T>
+    public interface IEventHandler<in T> where T : class
     {
         /// <summary>
         /// Process an event of the declared type.

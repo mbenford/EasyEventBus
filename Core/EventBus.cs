@@ -26,9 +26,9 @@ namespace EasyEventBus
         /// <summary>
         /// Publishes an event to registered handlers of the provided type.
         /// </summary>
-        /// <typeparam name="T">Type of the event.</typeparam>
+        /// <typeparam name="T">Type of the event. Must be a reference type.</typeparam>
         /// <param name="eventData">Data of the event.</param>
-        public void Publish<T>(T eventData)
+        public void Publish<T>(T eventData) where T : class
         {
             foreach (var strategy in publicationStrategies)
             {
@@ -39,10 +39,10 @@ namespace EasyEventBus
         /// <summary>
         /// Publishes an event to registered handlers of the provided type asynchronously.
         /// </summary>
-        /// <typeparam name="T">Type of the event.</typeparam>
+        /// <typeparam name="T">Type of the event. Must be a reference type.</typeparam>
         /// <param name="eventData">Data of the event.</param>
         /// <returns>A <see cref="System.Threading.Tasks.Task"/>.</returns>
-        public async Task PublishAsync<T>(T eventData)
+        public async Task PublishAsync<T>(T eventData) where T : class
         {
             await Task.Factory.StartNew(() => Publish(eventData));
         }

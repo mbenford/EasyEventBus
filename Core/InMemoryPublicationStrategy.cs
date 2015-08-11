@@ -19,7 +19,7 @@ namespace EasyEventBus
             this.container = container;
         }
 
-        public void Publish<T>(T eventData)
+        public void Publish<T>(T eventData) where T : class
         {
             foreach (var handler in container.GetAll<T>())
             {

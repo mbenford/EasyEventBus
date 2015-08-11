@@ -38,7 +38,7 @@ namespace EasyEventBus
         {
         }
 
-        public IEnumerable<IEventHandler<T>> GetAll<T>()
+        public IEnumerable<IEventHandler<T>> GetAll<T>() where T : class
         {
             Type eventHandlerType = typeof(IEventHandler<T>);
             return from assembly in assemblies

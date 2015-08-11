@@ -10,8 +10,8 @@ namespace EasyEventBus
         /// <summary>
         /// Gets all event handlers of the provided type.
         /// </summary>
-        /// <typeparam name="T">Type of the event.</typeparam>
+        /// <typeparam name="T">Type of the event. Must be a reference type.</typeparam>
         /// <returns>A list of event handlers.</returns>
-        IEnumerable<IEventHandler<T>> GetAll<T>();
+        IEnumerable<IEventHandler<T>> GetAll<T>() where T : class;
     }
 }
