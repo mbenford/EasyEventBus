@@ -51,7 +51,15 @@ namespace EasyEventBus
 
             foreach (var strategy in publicationStrategies)
             {
-                strategy.Publish(eventData);
+                try
+                {
+                    strategy.Publish(eventData);
+                }
+                catch
+                {
+                    // Publication errors are silently ignored since strategies are supposed
+                    // to handle them themselves
+                }
             }
         }
 
