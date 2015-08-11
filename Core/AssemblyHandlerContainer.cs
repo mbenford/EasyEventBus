@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using EasyEventBus.Util;
 
 namespace EasyEventBus
 {
@@ -17,8 +18,8 @@ namespace EasyEventBus
         /// </summary>
         /// <param name="assemblies">Assemblies to be scanned for event handlers.</param>
         public AssemblyHandlerContainer(IEnumerable<Assembly> assemblies)
+            : this(assemblies.ToArray())
         {
-            this.assemblies = assemblies;
         }
 
         /// <summary>
@@ -26,8 +27,10 @@ namespace EasyEventBus
         /// </summary>
         /// <param name="assembly">Assembly to be scanned for event handlers.</param>
         public AssemblyHandlerContainer(Assembly assembly)
-            : this(new[] { assembly })
         {
+            Precondition.NotNull(assembly);
+
+            assemblies = new[] { assembly };
         }
 
         /// <summary>
@@ -36,6 +39,14 @@ namespace EasyEventBus
         public AssemblyHandlerContainer()
             : this(Assembly.GetCallingAssembly())
         {
+        }
+
+        private AssemblyHandlerContainer(Assembly[] assemblies)
+        {
+            Precondition.NotNull(assemblies);
+            Precondition.NotEmpty(assemblies);
+
+            this.assemblies = assemblies;
         }
 
         public IEnumerable<IEventHandler<T>> GetAll<T>() where T : class

@@ -1,4 +1,5 @@
 ﻿using System;
+using EasyEventBus.Util;
 
 namespace EasyEventBus
 {
@@ -15,12 +16,15 @@ namespace EasyEventBus
         /// <param name="container">Instance of an event handler container.</param>
         public InMemoryPublicationStrategy(IEventHandlerContainer container)
         {
-            if (container == null) throw new ArgumentNullException("container");
+            Precondition.NotNull(container);
+
             this.container = container;
         }
 
         public void Publish<T>(T eventData) where T : class
         {
+            Precondition.NotNull(eventData);
+
             foreach (var handler in container.GetAll<T>())
             {
                 handler.Handle(eventData);

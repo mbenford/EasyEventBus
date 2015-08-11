@@ -30,7 +30,18 @@ namespace EasyEventBus.Tests
         [Fact]
         public void Throws_An_Exception_If_A_Null_Container_Is_Provided()
         {
-            Assert.Throws<ArgumentNullException>("container", () => new InMemoryPublicationStrategy(null));
+            Assert.Throws<ArgumentNullException>(() => new InMemoryPublicationStrategy(null));
+        }
+
+        [Fact]
+        public void Throws_An_Exception_If_A_Null_Event_Data_Is_Provided()
+        {
+            // Arrange
+            var containerMock = new Mock<IEventHandlerContainer>();
+            var sut = new InMemoryPublicationStrategy(containerMock.Object);
+
+            // Act/Assert
+            Assert.Throws<ArgumentNullException>(() => sut.Publish((object)null));
         }
 
         private Mock<IEventHandler<T>>[] SetUpContainer<T>(Mock<IEventHandlerContainer> container, int count) where T : class
