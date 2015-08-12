@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyHandlerContainer.cs" />
+    <Compile Include="IEventBus.cs" />
     <Compile Include="InMemoryPublicationStrategy.cs" />
     <Compile Include="EventBus.cs" />
     <Compile Include="IEventHandler.cs" />

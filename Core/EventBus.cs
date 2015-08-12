@@ -6,9 +6,9 @@ using EasyEventBus.Util;
 namespace EasyEventBus
 {
     /// <summary>
-    /// Represents an event bus.
+    /// An easy-to-use event bus.
     /// </summary>
-    public sealed class EventBus
+    public sealed class EventBus : IEventBus
     {
         private readonly IEnumerable<IPublicationStrategy> publicationStrategies;
 
@@ -72,6 +72,36 @@ namespace EasyEventBus
         public async Task PublishAsync<T>(T eventData) where T : class
         {
             await Task.Factory.StartNew(() => Publish(eventData));
+        }
+
+        /// <summary>
+        /// Creates a typed event bus.
+        /// </summary>
+        /// <typeparam name="T">Type to be used as a constraint for publishing events.</typeparam>
+        /// <returns>An implementation of the <see cref="IEventBus{T}"/> interface</returns>
+        public IEventBus<T> As<T>() where T : class
+        {
+            return new EventBusTyped<T>(this);
+        }
+
+        class EventBusTyped<T> : IEventBus<T> where T : class
+        {
+            private readonly IEventBus eventBus;
+
+            public EventBusTyped(IEventBus eventBus)
+            {
+                this.eventBus = eventBus;
+            }
+
+            public void Publish(T eventData)
+            {
+                eventBus.Publish(eventData);
+            }
+
+            public async Task PublishAsync(T eventData)
+            {
+                await eventBus.PublishAsync(eventData);
+            }
         }
     }
 }

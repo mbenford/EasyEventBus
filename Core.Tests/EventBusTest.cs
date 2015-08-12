@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using FluentAssertions;
+using FluentAssertions.Execution;
 using Moq;
 using Xunit;
 
@@ -82,5 +84,24 @@ namespace EasyEventBus.Tests
             // Act/Assert
             await Assert.ThrowsAsync<ArgumentNullException>(() => sut.PublishAsync((object)null));
         }
+
+        [Fact]
+        public void Creates_A_Typed_Event_Bus()
+        {
+            // Arrange
+            var publicationStrategyMock = new Mock<IPublicationStrategy>();
+            var sut = new EventBus(publicationStrategyMock.Object);
+
+            // Act/Assert
+            using (new AssertionScope())
+            {
+                sut.As<string>().Should().BeAssignableTo<IEventBus<string>>();
+                sut.As<Foo>().Should().BeAssignableTo<IEventBus<Foo>>();
+                sut.As<Bar>().Should().BeAssignableTo<IEventBus<Bar>>();
+            }
+        }
+
+        class Foo { }
+        class Bar { }
     }
 }
