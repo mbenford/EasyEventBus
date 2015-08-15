@@ -1,7 +1,10 @@
+using System.Reflection;
+
 namespace EasyEventBus.Configuration
 {
     public interface IInMemoryStrategyConfig
     {
-        void SetContainer(IEventHandlerContainer container);
+        void SetAssemblies(Assembly[] assemblies);
+        void SetTypeResolver(ITypeResolver resolver);
     }
 }

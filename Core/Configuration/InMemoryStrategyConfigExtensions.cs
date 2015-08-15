@@ -12,9 +12,11 @@ namespace EasyEventBus.Configuration
         /// <param name="setup">Configuration method.</param>
         public static void UseInMemoryStrategy(this IEventBusConfig config, Action<IInMemoryStrategyConfig> setup)
         {
-            var containerConfiguration = new InMemoryStrategyConfig();
-            setup(containerConfiguration);
-            config.UsePublicationStrategy(new InMemoryPublicationStrategy(containerConfiguration.Container));
+            var strategyConfig = new InMemoryStrategyConfig();
+            setup(strategyConfig);
+
+            var handlerContainer = new HandlerContainer(strategyConfig.Resolver, strategyConfig.Assemblies);
+            config.UsePublicationStrategy(new InMemoryPublicationStrategy(handlerContainer));
         }
 
         /// <summary>
@@ -24,7 +26,7 @@ namespace EasyEventBus.Configuration
         /// <param name="assemblies">List of assemblies event handlers should be loaded from.</param>
         public static void LoadHandlersFromAssemblies(this IInMemoryStrategyConfig config, params Assembly[] assemblies)
         {
-            config.SetContainer(new AssemblyHandlerContainer(assemblies));
+            config.SetAssemblies(assemblies);
         }
 
         /// <summary>

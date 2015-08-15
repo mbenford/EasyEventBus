@@ -66,7 +66,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyHandlerContainerTest.cs" />
+    <Compile Include="HandlerContainerTest.cs" />
     <Compile Include="EventBusTest.cs" />
     <Compile Include="InMemoryPublicationStrategyTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

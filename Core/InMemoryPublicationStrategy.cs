@@ -1,5 +1,4 @@
-﻿using System;
-using EasyEventBus.Util;
+﻿using EasyEventBus.Util;
 
 namespace EasyEventBus
 {

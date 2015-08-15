@@ -1,15 +1,25 @@
-using System;
+using System.Reflection;
 
 namespace EasyEventBus.Configuration
 {
     class InMemoryStrategyConfig : IInMemoryStrategyConfig
     {
-        public void SetContainer(IEventHandlerContainer container)
+        public InMemoryStrategyConfig()
         {
-            if (Container != null) throw new InvalidOperationException("A handler container has already been set");
-            Container = container;
+            Resolver = new DefaultTypeResolver();
         }
 
-        public IEventHandlerContainer Container { get; private set; }
+        public void SetAssemblies(Assembly[] assemblies)
+        {
+            Assemblies = assemblies;
+        }
+
+        public void SetTypeResolver(ITypeResolver resolver)
+        {
+            Resolver = resolver;
+        }
+
+        public Assembly[] Assemblies { get; private set; }
+        public ITypeResolver Resolver { get; private set; }
     }
 }

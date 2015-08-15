@@ -45,14 +45,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyHandlerContainer.cs" />
+    <Compile Include="HandlerContainer.cs" />
     <Compile Include="Configuration\InMemoryStrategyConfigExtensions.cs" />
     <Compile Include="Configuration\EventBusConfig.cs" />
     <Compile Include="Configuration\EventBusFactory.cs" />
     <Compile Include="Configuration\IEventBusConfig.cs" />
     <Compile Include="Configuration\IInMemoryStrategyConfig.cs" />
     <Compile Include="Configuration\InMemoryStrategyConfig.cs" />
+    <Compile Include="DefaultTypeResolver.cs" />
     <Compile Include="IEventBus.cs" />
+    <Compile Include="ITypeResolver.cs" />
     <Compile Include="InMemoryPublicationStrategy.cs" />
     <Compile Include="EventBus.cs" />
     <Compile Include="IEventHandler.cs" />
