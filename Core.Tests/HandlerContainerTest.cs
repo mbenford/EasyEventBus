@@ -24,7 +24,7 @@ namespace EasyEventBus.Tests
         [Fact]
         public void Throws_An_Exception_If_A_Null_Assembly_List_Is_Provided()
         {
-            Assert.Throws<ArgumentException>(() => new HandlerContainer(new DefaultTypeResolver(), null));
+            Assert.Throws<ArgumentNullException>(() => new HandlerContainer(new DefaultTypeResolver(), null));
         }
 
         [Fact]

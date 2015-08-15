@@ -13,6 +13,7 @@ namespace EasyEventBus
     {
         private readonly ITypeResolver resolver;
         private readonly Assembly[] assemblies;
+        private readonly IDictionary<Type, IEnumerable<object>> cache;
 
         /// <summary>
         /// Creates a new instance of the HandlerContainer class and scans the provided assemblies.
@@ -22,20 +23,30 @@ namespace EasyEventBus
         public HandlerContainer(ITypeResolver resolver, params Assembly[] assemblies)
         {
             Precondition.NotNull(resolver);
-            Precondition.NotNull(assemblies);
             Precondition.NotEmpty(assemblies);
 
             this.resolver = resolver;
             this.assemblies = assemblies;
+
+            cache = new Dictionary<Type, IEnumerable<object>>();
         }
 
         public IEnumerable<IEventHandler<T>> GetAll<T>() where T : class
         {
-            Type eventHandlerType = typeof(IEventHandler<T>);
+            Type handlerType = typeof(IEventHandler<T>);
+            if (!cache.ContainsKey(handlerType))
+            {
+                cache.Add(handlerType, LoadFromAssemblies(handlerType));
+            }
+            return cache[handlerType].Cast<IEventHandler<T>>();
+        }
+
+        private IEnumerable<object> LoadFromAssemblies(Type handlerType)
+        {
             return from assembly in assemblies
                    from type in assembly.GetTypes()
-                   where type != eventHandlerType && eventHandlerType.IsAssignableFrom(type)
-                   select (IEventHandler<T>)resolver.Resolve(type);
+                   where type != handlerType && handlerType.IsAssignableFrom(type)
+                   select resolver.Resolve(type);
         }
     }
 }
