@@ -14,6 +14,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7306B3
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TypeResolvers", "TypeResolvers", "{2309668F-3FE8-4E34-A638-08118BAFFA6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ninject", "TypeResolvers\Ninject\Ninject.csproj", "{4022A5A3-F270-4611-B6AE-CA5DFA2B2C2A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,8 +32,15 @@ Global
 		{E6BA1019-69DD-4A71-A50C-0738D7F26E06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6BA1019-69DD-4A71-A50C-0738D7F26E06}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6BA1019-69DD-4A71-A50C-0738D7F26E06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4022A5A3-F270-4611-B6AE-CA5DFA2B2C2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4022A5A3-F270-4611-B6AE-CA5DFA2B2C2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4022A5A3-F270-4611-B6AE-CA5DFA2B2C2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4022A5A3-F270-4611-B6AE-CA5DFA2B2C2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4022A5A3-F270-4611-B6AE-CA5DFA2B2C2A} = {2309668F-3FE8-4E34-A638-08118BAFFA6D}
 	EndGlobalSection
 EndGlobal
