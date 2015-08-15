@@ -34,7 +34,6 @@ namespace EasyEventBus
 
         private EventBus(IPublicationStrategy[] publicationStrategies)
         {
-            Precondition.NotNull(publicationStrategies);
             Precondition.NotEmpty(publicationStrategies);
 
             this.publicationStrategies = publicationStrategies;

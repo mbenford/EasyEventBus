@@ -13,6 +13,7 @@ namespace EasyEventBus.Util
 
         public static void NotEmpty<T>(IEnumerable<T> value)
         {
+            NotNull(value);
             if (!value.Any()) throw new ArgumentException("Argument cannot be empty");
         }
     }
