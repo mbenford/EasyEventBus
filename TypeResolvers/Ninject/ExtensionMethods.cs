@@ -1,7 +1,7 @@
 ﻿using EasyEventBus.Configuration;
 using Ninject;
 
-namespace EasyEventBus.TypeResolver.Ninject
+namespace EasyEventBus.TypeResolvers.Ninject
 {
     public static class ExtensionMethods
     {

@@ -13,7 +13,7 @@ namespace EasyEventBus
     {
         private readonly ITypeResolver resolver;
         private readonly Assembly[] assemblies;
-        private readonly IDictionary<Type, IEnumerable<object>> cache;
+        private readonly IDictionary<Type, Type[]> types;
 
         /// <summary>
         /// Creates a new instance of the HandlerContainer class and scans the provided assemblies.
@@ -28,25 +28,31 @@ namespace EasyEventBus
             this.resolver = resolver;
             this.assemblies = assemblies;
 
-            cache = new Dictionary<Type, IEnumerable<object>>();
+            types = new Dictionary<Type, Type[]>();
         }
 
         public IEnumerable<IEventHandler<T>> GetAll<T>() where T : class
         {
-            Type handlerType = typeof(IEventHandler<T>);
-            if (!cache.ContainsKey(handlerType))
-            {
-                cache.Add(handlerType, LoadFromAssemblies(handlerType));
-            }
-            return cache[handlerType].Cast<IEventHandler<T>>();
+            return GetTypes(typeof(IEventHandler<T>))
+                  .Select(type => resolver.Resolve(type))
+                  .Cast<IEventHandler<T>>();
         }
 
-        private IEnumerable<object> LoadFromAssemblies(Type handlerType)
+        public Type[] GetTypes(Type type)
         {
-            return from assembly in assemblies
-                   from type in assembly.GetTypes()
-                   where type != handlerType && handlerType.IsAssignableFrom(type)
-                   select resolver.Resolve(type);
+            if (!types.ContainsKey(type))
+            {
+                types.Add(type, LoadFromAssemblies(type));
+            }
+            return types[type];
+        }
+
+        private Type[] LoadFromAssemblies(Type handlerType)
+        {
+            return assemblies.SelectMany(assembly => assembly.GetTypes(), (assembly, type) => type)
+                             .Where(type => type != handlerType && handlerType.IsAssignableFrom(type))
+                             .Select(type => type)
+                             .ToArray();
         }
     }
 }

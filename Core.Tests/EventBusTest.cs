@@ -12,13 +12,13 @@ namespace EasyEventBus.Tests
         [Fact]
         public void Throws_An_Exception_If_A_Null_Publication_Strategy_Is_Provided()
         {
-            Assert.Throws<ArgumentNullException>(() => new EventBus((IPublicationStrategy)null));
+            Assert.Throws<ArgumentNullException>(() => new EventBus(null));
         }
 
         [Fact]
         public void Throws_An_Exception_If_An_Empty_Publication_Strategy_List_Is_Provided()
         {
-            Assert.Throws<ArgumentException>(() => new EventBus(new IPublicationStrategy[] { }));
+            Assert.Throws<ArgumentException>(() => new EventBus());
         }
 
         [Fact]

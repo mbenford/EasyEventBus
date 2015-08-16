@@ -7,7 +7,7 @@
     <ProjectGuid>{4022A5A3-F270-4611-B6AE-CA5DFA2B2C2A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EasyEventBus.TypeResolver.Ninject</RootNamespace>
+    <RootNamespace>EasyEventBus.TypeResolvers.Ninject</RootNamespace>
     <AssemblyName>EasyEventBus.Ninject</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

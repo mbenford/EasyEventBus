@@ -1,7 +1,7 @@
 ﻿using System;
 using Ninject;
 
-namespace EasyEventBus.TypeResolver.Ninject
+namespace EasyEventBus.TypeResolvers.Ninject
 {
     /// <summary>
     /// Resolves types by using Ninject.
