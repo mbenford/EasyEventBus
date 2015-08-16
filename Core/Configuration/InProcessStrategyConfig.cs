@@ -2,9 +2,9 @@ using System.Reflection;
 
 namespace EasyEventBus.Configuration
 {
-    class InMemoryStrategyConfig : IInMemoryStrategyConfig
+    class InProcessStrategyConfig : IInProcessStrategyConfig
     {
-        public InMemoryStrategyConfig()
+        public InProcessStrategyConfig()
         {
             Resolver = new DefaultTypeResolver();
         }

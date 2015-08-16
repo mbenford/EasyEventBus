@@ -3,20 +3,20 @@ using System.Reflection;
 
 namespace EasyEventBus.Configuration
 {
-    public static class InMemoryStrategyConfigExtensions
+    public static class InProcessStrategyConfigExtensions
     {
         /// <summary>
         /// Configures an in-memory publication strategy.
         /// </summary>
         /// <param name="config">Configuration object.</param>
         /// <param name="setup">Configuration method.</param>
-        public static void UseInMemoryStrategy(this IEventBusConfig config, Action<IInMemoryStrategyConfig> setup)
+        public static void UseInProcessStrategy(this IEventBusConfig config, Action<IInProcessStrategyConfig> setup)
         {
-            var strategyConfig = new InMemoryStrategyConfig();
+            var strategyConfig = new InProcessStrategyConfig();
             setup(strategyConfig);
 
             var handlerContainer = new HandlerContainer(strategyConfig.Resolver, strategyConfig.Assemblies);
-            config.UsePublicationStrategy(new InMemoryPublicationStrategy(handlerContainer));
+            config.UsePublicationStrategy(new InProcessPublicationStrategy(handlerContainer));
         }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace EasyEventBus.Configuration
         /// </summary>
         /// <param name="config">Configuration object.</param>
         /// <param name="assemblies">List of assemblies event handlers should be loaded from.</param>
-        public static void LoadHandlersFromAssemblies(this IInMemoryStrategyConfig config, params Assembly[] assemblies)
+        public static void LoadHandlersFromAssemblies(this IInProcessStrategyConfig config, params Assembly[] assemblies)
         {
             config.SetAssemblies(assemblies);
         }
@@ -33,7 +33,7 @@ namespace EasyEventBus.Configuration
         /// Tells the publication strategy to load event handlers from the current assembly.
         /// </summary>
         /// <param name="config">Configuration object.</param>
-        public static void LoadHandlersFromCurrentAssembly(this IInMemoryStrategyConfig config)
+        public static void LoadHandlersFromCurrentAssembly(this IInProcessStrategyConfig config)
         {
             config.LoadHandlersFromAssemblies(Assembly.GetCallingAssembly());
         }

@@ -6,7 +6,7 @@ using Xunit;
 
 namespace EasyEventBus.Tests
 {
-    public class InMemoryPublicationStrategyTest
+    public class InProcessPublicationStrategyTest
     {
         [Theory]
         [InlineData("some data", 1)]
@@ -18,7 +18,7 @@ namespace EasyEventBus.Tests
             var containerMock = new Mock<IEventHandlerContainer>();
             var handlers = SetUpContainer<T>(containerMock, count);
 
-            var sut = new InMemoryPublicationStrategy(containerMock.Object);
+            var sut = new InProcessPublicationStrategy(containerMock.Object);
 
             // Act
             sut.Publish(data);
@@ -30,7 +30,7 @@ namespace EasyEventBus.Tests
         [Fact]
         public void Throws_An_Exception_If_A_Null_Container_Is_Provided()
         {
-            Assert.Throws<ArgumentNullException>(() => new InMemoryPublicationStrategy(null));
+            Assert.Throws<ArgumentNullException>(() => new InProcessPublicationStrategy(null));
         }
 
         [Fact]
@@ -38,7 +38,7 @@ namespace EasyEventBus.Tests
         {
             // Arrange
             var containerMock = new Mock<IEventHandlerContainer>();
-            var sut = new InMemoryPublicationStrategy(containerMock.Object);
+            var sut = new InProcessPublicationStrategy(containerMock.Object);
 
             // Act/Assert
             Assert.Throws<ArgumentNullException>(() => sut.Publish((object)null));

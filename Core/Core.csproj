@@ -46,16 +46,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HandlerContainer.cs" />
-    <Compile Include="Configuration\InMemoryStrategyConfigExtensions.cs" />
+    <Compile Include="Configuration\InProcessStrategyConfigExtensions.cs" />
     <Compile Include="Configuration\EventBusConfig.cs" />
     <Compile Include="Configuration\EventBusFactory.cs" />
     <Compile Include="Configuration\IEventBusConfig.cs" />
-    <Compile Include="Configuration\IInMemoryStrategyConfig.cs" />
-    <Compile Include="Configuration\InMemoryStrategyConfig.cs" />
+    <Compile Include="Configuration\IInProcessStrategyConfig.cs" />
+    <Compile Include="Configuration\InProcessStrategyConfig.cs" />
     <Compile Include="DefaultTypeResolver.cs" />
     <Compile Include="IEventBus.cs" />
     <Compile Include="ITypeResolver.cs" />
-    <Compile Include="InMemoryPublicationStrategy.cs" />
+    <Compile Include="InProcessPublicationStrategy.cs" />
     <Compile Include="EventBus.cs" />
     <Compile Include="IEventHandler.cs" />
     <Compile Include="IEventHandlerContainer.cs" />

@@ -3,17 +3,17 @@
 namespace EasyEventBus
 {
     /// <summary>
-    /// Represents an in-memory event bus.
+    /// Represents an in-process event bus.
     /// </summary>
-    public sealed class InMemoryPublicationStrategy : IPublicationStrategy
+    public sealed class InProcessPublicationStrategy : IPublicationStrategy
     {
         private readonly IEventHandlerContainer container;
 
         /// <summary>
-        /// Creates a new instance of the InMemoryPublicationStrategy class.
+        /// Creates a new instance of the InProcessPublicationStrategy class.
         /// </summary>
         /// <param name="container">Instance of an event handler container.</param>
-        public InMemoryPublicationStrategy(IEventHandlerContainer container)
+        public InProcessPublicationStrategy(IEventHandlerContainer container)
         {
             Precondition.NotNull(container);
 
