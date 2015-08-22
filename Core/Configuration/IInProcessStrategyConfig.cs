@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 
 namespace EasyEventBus.Configuration
@@ -5,6 +6,6 @@ namespace EasyEventBus.Configuration
     public interface IInProcessStrategyConfig
     {
         void SetAssemblies(Assembly[] assemblies);
-        void SetTypeResolver(ITypeResolver resolver);
+        void SetServiceProvider(IServiceProvider serviceProvider);
     }
 }

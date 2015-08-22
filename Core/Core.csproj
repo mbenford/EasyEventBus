@@ -52,9 +52,8 @@
     <Compile Include="Configuration\IEventBusConfig.cs" />
     <Compile Include="Configuration\IInProcessStrategyConfig.cs" />
     <Compile Include="Configuration\InProcessStrategyConfig.cs" />
-    <Compile Include="DefaultTypeResolver.cs" />
+    <Compile Include="DefaultServiceProvider.cs" />
     <Compile Include="IEventBus.cs" />
-    <Compile Include="ITypeResolver.cs" />
     <Compile Include="InProcessPublicationStrategy.cs" />
     <Compile Include="EventBus.cs" />
     <Compile Include="IEventHandler.cs" />

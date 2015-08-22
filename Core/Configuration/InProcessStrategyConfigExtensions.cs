@@ -15,7 +15,7 @@ namespace EasyEventBus.Configuration
             var strategyConfig = new InProcessStrategyConfig();
             setup(strategyConfig);
 
-            var handlerContainer = new HandlerContainer(strategyConfig.Resolver, strategyConfig.Assemblies);
+            var handlerContainer = new HandlerContainer(strategyConfig.ServiceProvider, strategyConfig.Assemblies);
             config.UsePublicationStrategy(new InProcessPublicationStrategy(handlerContainer));
         }
 
@@ -36,6 +36,11 @@ namespace EasyEventBus.Configuration
         public static void LoadHandlersFromCurrentAssembly(this IInProcessStrategyConfig config)
         {
             config.LoadHandlersFromAssemblies(Assembly.GetCallingAssembly());
+        }
+
+        public static void UseServiceProvider(this IInProcessStrategyConfig config, IServiceProvider serviceProvider)
+        {
+            config.SetServiceProvider(serviceProvider);
         }
     }
 }

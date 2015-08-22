@@ -11,21 +11,21 @@ namespace EasyEventBus
     /// </summary>
     public sealed class HandlerContainer : IEventHandlerContainer
     {
-        private readonly ITypeResolver resolver;
+        private readonly IServiceProvider serviceProvider;
         private readonly Assembly[] assemblies;
         private readonly IDictionary<Type, Type[]> types;
 
         /// <summary>
         /// Creates a new instance of the HandlerContainer class and scans the provided assemblies.
         /// </summary>
-        /// <param name="resolver"></param>
+        /// <param name="serviceProvider"></param>
         /// <param name="assemblies">Assemblies to be scanned for event handlers.</param>
-        public HandlerContainer(ITypeResolver resolver, params Assembly[] assemblies)
+        public HandlerContainer(IServiceProvider serviceProvider, params Assembly[] assemblies)
         {
-            Precondition.NotNull(resolver);
+            Precondition.NotNull(serviceProvider);
             Precondition.NotEmpty(assemblies);
 
-            this.resolver = resolver;
+            this.serviceProvider = serviceProvider;
             this.assemblies = assemblies;
 
             types = new Dictionary<Type, Type[]>();
@@ -34,11 +34,11 @@ namespace EasyEventBus
         public IEnumerable<IEventHandler<T>> GetAll<T>() where T : class
         {
             return GetTypes(typeof(IEventHandler<T>))
-                  .Select(type => resolver.Resolve(type))
+                  .Select(type => serviceProvider.GetService(type))
                   .Cast<IEventHandler<T>>();
         }
 
-        public Type[] GetTypes(Type type)
+        private Type[] GetTypes(Type type)
         {
             if (!types.ContainsKey(type))
             {

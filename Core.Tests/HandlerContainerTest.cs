@@ -10,7 +10,7 @@ namespace EasyEventBus.Tests
     public class HandlerContainerTest
     {
         [Fact]
-        public void Throws_An_Exception_If_A_Null_Handler_Resolver_Is_Provided()
+        public void Throws_An_Exception_If_A_Null_Service_Provider_Is_Provided()
         {
             Assert.Throws<ArgumentNullException>(() => new HandlerContainer(null));
         }
@@ -18,20 +18,20 @@ namespace EasyEventBus.Tests
         [Fact]
         public void Throws_An_Exception_If_An_Empty_Assembly_List_Is_Provided()
         {
-            Assert.Throws<ArgumentException>(() => new HandlerContainer(new DefaultTypeResolver()));
+            Assert.Throws<ArgumentException>(() => new HandlerContainer(new DefaultServiceProvider()));
         }
 
         [Fact]
         public void Throws_An_Exception_If_A_Null_Assembly_List_Is_Provided()
         {
-            Assert.Throws<ArgumentNullException>(() => new HandlerContainer(new DefaultTypeResolver(), null));
+            Assert.Throws<ArgumentNullException>(() => new HandlerContainer(new DefaultServiceProvider(), null));
         }
 
         [Fact]
         public void Loads_All_Event_Handlers_From_The_Provided_Assemblies()
         {
             // Arrange
-            var sut = new HandlerContainer(new DefaultTypeResolver(), Assembly.GetExecutingAssembly(), Assembly.GetExecutingAssembly());
+            var sut = new HandlerContainer(new DefaultServiceProvider(), Assembly.GetExecutingAssembly(), Assembly.GetExecutingAssembly());
 
             // Act/Assert
             using (new AssertionScope())

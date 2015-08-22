@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 
 namespace EasyEventBus.Configuration
@@ -6,7 +7,7 @@ namespace EasyEventBus.Configuration
     {
         public InProcessStrategyConfig()
         {
-            Resolver = new DefaultTypeResolver();
+            ServiceProvider = new DefaultServiceProvider();
         }
 
         public void SetAssemblies(Assembly[] assemblies)
@@ -14,12 +15,12 @@ namespace EasyEventBus.Configuration
             Assemblies = assemblies;
         }
 
-        public void SetTypeResolver(ITypeResolver resolver)
+        public void SetServiceProvider(IServiceProvider serviceProvider)
         {
-            Resolver = resolver;
+            ServiceProvider = serviceProvider;
         }
 
         public Assembly[] Assemblies { get; private set; }
-        public ITypeResolver Resolver { get; private set; }
+        public IServiceProvider ServiceProvider { get; private set; }
     }
 }
